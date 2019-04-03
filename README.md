@@ -4,6 +4,9 @@
 - Configure your 3-node cluster so that they can login without using password.
 - Git clone the repository at the `root` directory
 - Run ./insall.sh
+- Run ./start.sh
+- If you have `node-0 not recognized` error, please replace your the `node-0`, in the code, to your manager's IP address
+- Run other examples
 
 
 ---
