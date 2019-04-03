@@ -5,8 +5,9 @@
 3. Git clone the repository at the `root` directory
 4. Run ./insall.sh
 5. Run ./start.sh
-6. If you have `node-0 not recognized` error, please replace your the `node-0`, in the code, to your manager's IP address
-7. Run other examples
+6. Run other examples
+7. If you have `node-0 not recognized` error, please replace your the `node-0`, in the code, to your manager's IP address
+8. The `spark-shell` is located at `/usr/local/spark/bin/spark-shell`
 
 
 ---
