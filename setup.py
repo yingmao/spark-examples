@@ -28,7 +28,7 @@ os.system("rm -rf /usr/local/hadoop-2.9.2/ && unlink /usr/local/hadoop && rm -rf
 os.system("sed -i /JAVA_HOME/d /root/.bashrc && sed -i /hadoop/d /root/.bashrc && sed -i /StrictHostKeyChecking/d /etc/ssh/ssh_config")
 
 if os.path.exists("/hdfs-test/hadoop-2.9.2.tar.gz"):
-	os.system("cp /hdfs-test/hadoop-2.9.2.tar.gz /spark-examples/"
+	os.system("cp /hdfs-test/hadoop-2.9.2.tar.gz /spark-examples/")
 
 if not os.path.exists("/hdfs-test/hadoop-2.9.2.tar.gz"):
 	print("Downloading Hadoop 2.9.2....")
