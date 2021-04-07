@@ -27,12 +27,18 @@ os.system("apt-get update -y && apt-get install python -y && apt-get install -y 
 os.system("rm -rf /usr/local/hadoop-2.9.2/ && unlink /usr/local/hadoop && rm -rf /data/hadoop/ && rm -rf /usr/local/spark-2.4.0-bin-hadoop2.7/ && unlink /usr/local/spark && rm -rf /usr/local/scala-2.11.12 && unlink /usr/local/scala")
 os.system("sed -i /JAVA_HOME/d /root/.bashrc && sed -i /hadoop/d /root/.bashrc && sed -i /StrictHostKeyChecking/d /etc/ssh/ssh_config")
 
-print("Downloading Hadoop 2.9.2....")
-os.system("curl http://apache.claz.org/hadoop/common/hadoop-2.9.2/hadoop-2.9.2.tar.gz > /hadoop-2.9.2.tar.gz")
-print("Download Hadoop 2.9.2 Successful...")
+if os.path.exists("/hdfs-test/hadoop-2.9.2.tar.gz"):
+	os.system("cp /hdfs-test/hadoop-2.9.2.tar.gz /spark-examples/"
+
+if not os.path.exists("/hdfs-test/hadoop-2.9.2.tar.gz"):
+	print("Downloading Hadoop 2.9.2....")
+	os.system("curl http://apache.claz.org/hadoop/common/hadoop-2.9.2/hadoop-2.9.2.tar.gz > /spark-examples/hadoop-2.9.2.tar.gz")
+	print("Download Hadoop 2.9.2 Successful...")
+
 print("Install Hadoop 2.9.2 .....")
-os.system("tar -xzf /hadoop-2.9.2.tar.gz -C /usr/local/ && ln -s /usr/local/hadoop-2.9.2/ /usr/local/hadoop")
+os.system("tar -xzf hadoop-2.9.2.tar.gz -C /usr/local/ && ln -s /usr/local/hadoop-2.9.2/ /usr/local/hadoop")
 print("Finished Install Hadoop 2.9.2....")
+		  
 print("Config Hadoop 2.9.2 ...")
 os.system("sed -i '/export JAVA_HOME/s/${JAVA_HOME}/\/usr\/lib\/jvm\/default-java\//g' /usr/local/hadoop/etc/hadoop/hadoop-env.sh")
 
@@ -41,13 +47,13 @@ print("Downloading and install  Scala2.11.12")
 os.system("curl https://downloads.lightbend.com/scala/2.11.12/scala-2.11.12.tgz > /scala-2.11.12.tgz && tar -xzf /scala-2.11.12.tgz -C /usr/local/ && ln -s /usr/local/scala-2.11.12 /usr/local/scala")
 print("Finished install scala-2.11.12")
 
-
-print("Downloading Spark 2.4.0....")
-os.system("curl https://archive.apache.org/dist/spark/spark-2.4.0/spark-2.4.0-bin-hadoop2.7.tgz > /spark-2.4.0-bin-hadoop2.7.tgz")
-print("Download Spark 2.4.0 Successful...")
+if not os.path.exists("/spark-examples/spark-2.4.0-bin-hadoop2.7.tgz"):
+	print("Downloading Spark 2.4.0....")
+	os.system("curl https://archive.apache.org/dist/spark/spark-2.4.0/spark-2.4.0-bin-hadoop2.7.tgz > /spark-examples/spark-2.4.0-bin-hadoop2.7.tgz")
+	print("Download Spark 2.4.0 Successful...")
 
 print("Install Spark 2.4.0 .....")
-os.system("tar -xzf /spark-2.4.0-bin-hadoop2.7.tgz -C /usr/local/ && ln -s /usr/local/spark-2.4.0-bin-hadoop2.7/ /usr/local/spark")
+os.system("tar -xzf /spark-examples/spark-2.4.0-bin-hadoop2.7.tgz -C /usr/local/ && ln -s /usr/local/spark-2.4.0-bin-hadoop2.7/ /usr/local/spark")
 print("Finished Install Spark 2.9.2....")
 
 
@@ -66,12 +72,10 @@ os.system("sed -i '/export JAVA_HOME/s/${JAVA_HOME}/\/usr\/lib\/jvm\/default-jav
 coreSiteXml = """<?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 <configuration>
-    <!-- 默认HDFS的ip以及端口 -->
     <property>
          <name>fs.defaultFS</name>
          <value>hdfs://%(mip)s:9000</value>
     </property>
-    <!-- 默认的RPC绑定的IP，这里指定0.0.0.0表示全部ip-->
     <property>
 	<name>dfs.namenode.rpc-bind-host</name>
 	<value>0.0.0.0</value>
