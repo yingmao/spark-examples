@@ -27,22 +27,22 @@ sf.close()
 os.system("apt-get update -y && apt-get install python -y && apt-get install -y default-jdk && apt-get install -y curl && apt-get install -y maven && apt-get install -y python-pip && pip install pyhdfs && pip install numpy pyspark")
 
 #clear first
-os.system("rm -rf /usr/local/hadoop-2.9.2/ && unlink /usr/local/hadoop && rm -rf /data/hadoop/ && rm -rf /usr/local/spark-2.4.0-bin-hadoop2.7/ && unlink /usr/local/spark && rm -rf /usr/local/scala-2.11.12 && unlink /usr/local/scala")
+os.system("rm -rf /usr/local/hadoop-3.3.1/ && unlink /usr/local/hadoop && rm -rf /data/hadoop/ && rm -rf /usr/local/spark-2.4.0-bin-hadoop2.7/ && unlink /usr/local/spark && rm -rf /usr/local/scala-2.11.12 && unlink /usr/local/scala")
 os.system("sed -i /JAVA_HOME/d /root/.bashrc && sed -i /hadoop/d /root/.bashrc && sed -i /StrictHostKeyChecking/d /etc/ssh/ssh_config")
 
-if os.path.exists("/hdfs-test/hadoop-2.9.2.tar.gz"):
-	os.system("cp /hdfs-test/hadoop-2.9.2.tar.gz /spark-examples/")
+if os.path.exists("/hdfs-test/hadoop-3.3.1.tar.gz"):
+	os.system("cp /hdfs-test/hadoop-3.3.1.tar.gz /spark-examples/")
 
-if not os.path.exists("/hdfs-test/hadoop-2.9.2.tar.gz"):
-	print("Downloading Hadoop 2.9.2....")
-	os.system("curl http://apache.claz.org/hadoop/common/hadoop-2.9.2/hadoop-2.9.2.tar.gz > /spark-examples/hadoop-2.9.2.tar.gz")
-	print("Download Hadoop 2.9.2 Successful...")
+if not os.path.exists("/hdfs-test/hadoop-3.3.1.tar.gz"):
+	print("Downloading Hadoop 3.3.1....")
+	os.system("curl http://apache.claz.org/hadoop/common/hadoop-3.3.1/hadoop-3.3.1.tar.gz > /spark-examples/hadoop-3.3.1.tar.gz")
+	print("Download Hadoop 3.3.1 Successful...")
 
-print("Install Hadoop 2.9.2 .....")
-os.system("tar -xzf hadoop-2.9.2.tar.gz -C /usr/local/ && ln -s /usr/local/hadoop-2.9.2/ /usr/local/hadoop")
-print("Finished Install Hadoop 2.9.2....")
+print("Install Hadoop 3.3.1 .....")
+os.system("tar -xzf hadoop-3.3.1.tar.gz -C /usr/local/ && ln -s /usr/local/hadoop-3.3.1/ /usr/local/hadoop")
+print("Finished Install Hadoop 3.3.1....")
 		  
-print("Config Hadoop 2.9.2 ...")
+print("Config Hadoop 3.3.1 ...")
 os.system("sed -i '/export JAVA_HOME/s/${JAVA_HOME}/\/usr\/lib\/jvm\/default-java\//g' /usr/local/hadoop/etc/hadoop/hadoop-env.sh")
 
 
@@ -57,7 +57,7 @@ if not os.path.exists("/spark-examples/spark-2.4.0-bin-hadoop2.7.tgz"):
 
 print("Install Spark 2.4.0 .....")
 os.system("tar -xzf /spark-examples/spark-2.4.0-bin-hadoop2.7.tgz -C /usr/local/ && ln -s /usr/local/spark-2.4.0-bin-hadoop2.7/ /usr/local/spark")
-print("Finished Install Spark 2.9.2....")
+print("Finished Install Spark 3.3.1....")
 
 
 #config env
@@ -68,7 +68,7 @@ os.system("echo 'export PATH=$PATH:/usr/local/hadoop/bin/:/usr/local/hadoop/sbin
 os.system("echo 'StrictHostKeyChecking no' >> /etc/ssh/ssh_config")
 #config dir
 os.system("mkdir -p /data/hadoop/node && mkdir -p /data/hadoop/data && mkdir -p /data/hadoop/name")
-print("Config Hadoop 2.9.2 ...")
+print("Config Hadoop 3.3.1 ...")
 os.system("sed -i '/export JAVA_HOME/s/${JAVA_HOME}/\/usr\/lib\/jvm\/default-java\//g' /usr/local/hadoop/etc/hadoop/hadoop-env.sh")
 
 #core-site.xml
