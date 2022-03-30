@@ -44,6 +44,23 @@ print("Finished Install Hadoop 3.3.1....")
 		  
 print("Config Hadoop 3.3.1 ...")
 os.system("sed -i '/export JAVA_HOME/s/${JAVA_HOME}/\/usr\/lib\/jvm\/default-java\//g' /usr/local/hadoop/etc/hadoop/hadoop-env.sh")
+os.system("echo 'export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/' >>  /usr/local/hadoop-3.3.1/etc/hadoop/hadoop-env.sh")
+os.system("echo 'export HDFS_NAMENODE_USER=root' >>  /usr/local/hadoop-3.3.1/etc/hadoop/hadoop-env.sh")
+os.system("echo 'export HDFS_DATANODE_USER=root' >>  /usr/local/hadoop-3.3.1/etc/hadoop/hadoop-env.sh")
+os.system("echo 'export HDFS_SECONDARYNAMENODE_USER=root' >>  /usr/local/hadoop-3.3.1/etc/hadoop/hadoop-env.sh")
+os.system("echo 'export YARN_RESOURCEMANAGER_USER=root' >>  /usr/local/hadoop-3.3.1/etc/hadoop/hadoop-env.sh")
+os.system("echo 'export YARN_NODEMANAGER_USER=root' >>  /usr/local/hadoop-3.3.1/etc/hadoop/hadoop-env.sh")
+
+os.system("echo 'export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/' >>  /usr/local/hadoop/etc/hadoop/hadoop-env.sh")
+os.system("echo 'export HDFS_NAMENODE_USER=root' >>  /usr/local/hadoop/etc/hadoop/hadoop-env.sh")
+os.system("echo 'export HDFS_DATANODE_USER=root' >>  /usr/local/hadoop/etc/hadoop/hadoop-env.sh")
+os.system("echo 'export HDFS_SECONDARYNAMENODE_USER=root' >>  /usr/local/hadoop/etc/hadoop/hadoop-env.sh")
+os.system("echo 'export YARN_RESOURCEMANAGER_USER=root' >>  /usr/local/hadoop/etc/hadoop/hadoop-env.sh")
+os.system("echo 'export YARN_NODEMANAGER_USER=root' >>  /usr/local/hadoop/etc/hadoop/hadoop-env.sh")
+	  
+os.system("echo 'export HADOOP_HOME=/usr/local/hadoop' >> /root/.bashrc")
+os.system("source ~/.bashrc")
+os.system("pip install pyhdfs")	 
 
 
 print("Downloading and install  Scala2.11.12")
