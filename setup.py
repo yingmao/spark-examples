@@ -69,7 +69,7 @@ print("Finished install scala-2.11.12")
 
 if not os.path.exists("/spark-examples/spark-3.2.1-bin-hadoop3.2.tgz"):
 	print("Downloading Spark 3.2.1....")
-	os.system("curl 	https://www.apache.org/dyn/closer.lua/spark/spark-3.2.1/spark-3.2.1-bin-hadoop3.2.tgz > /spark-examples/spark-3.2.1-bin-hadoop3.2.tgz")
+	os.system("curl https://dlcdn.apache.org/spark/spark-3.2.1/spark-3.2.1-bin-hadoop3.2.tgz > /spark-examples/spark-3.2.1-bin-hadoop3.2.tgz")
 	
 	print("Download Spark 3.2.1 Successful...")
 
