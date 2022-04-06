@@ -24,7 +24,7 @@ sf.close()
 # os.system("apt-get install -y python3-pip && curl -fsSL -o- https://bootstrap.pypa.io/pip/3.5/get-pip.py | python3.5 && hash -r && pip install --upgrade pip && pip install pyhdfs")
 
 os.system("sudo apt install software-properties-common -y &&  sudo add-apt-repository ppa:deadsnakes/ppa -y && sudo apt update && sudo apt install python3.9 -y")
-os.system("apt-get update -y && apt-get install python -y && apt-get install -y default-jdk && apt-get install -y curl && apt-get install -y maven && apt-get install -y python-pip && pip install pyhdfs && pip install numpy pyspark && pip3 install pyhdfs && pip3 install numpy pyspark")
+os.system("apt-get update -y && apt-get install python -y && apt-get install -y default-jdk && apt-get install -y curl && apt-get install -y maven && sudo apt-get -y install python3-pip && pip3 install pyhdfs && pip3 install numpy pyspark")
 
 #clear first
 os.system("rm -rf /usr/local/hadoop-3.3.1/ && unlink /usr/local/hadoop && rm -rf /data/hadoop/ && rm -rf /usr/local/spark-3.2.1-bin-hadoop3.2/ && unlink /usr/local/spark && rm -rf /usr/local/scala-2.11.12 && unlink /usr/local/scala")
