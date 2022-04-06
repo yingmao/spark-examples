@@ -60,7 +60,7 @@ os.system("echo 'export YARN_NODEMANAGER_USER=root' >>  /usr/local/hadoop/etc/ha
 	  
 os.system("echo 'export HADOOP_HOME=/usr/local/hadoop' >> /root/.bashrc")
 os.system("source ~/.bashrc")
-os.system("pip install pyhdfs")	 
+os.system("pip3 install pyhdfs")	 
 
 
 print("Downloading and install  Scala2.11.12")
