@@ -23,8 +23,8 @@ from operator import add
 
 from pyspark.sql import SparkSession
 
-reload(sys) 
-sys.setdefaultencoding('utf8')
+# reload(sys) 
+# sys.setdefaultencoding('utf8')
 if __name__ == "__main__":
     if len(sys.argv) != 2:
         print("Usage: wordcount <file>", file=sys.stderr)
