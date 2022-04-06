@@ -3,8 +3,8 @@ import sys
 from pyspark import SparkConf,SparkContext
 import random
 
-reload(sys) 
-sys.setdefaultencoding('utf8')
+# reload(sys) 
+# sys.setdefaultencoding('utf8')
 if __name__ == "__main__":
     conf = SparkConf().setAppName("RDD-FLATMAP")
     
