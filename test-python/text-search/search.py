@@ -5,8 +5,8 @@ from operator import add
 from pyspark import SparkConf,SparkContext
 from pyspark.sql import *
 
-reload(sys) 
-sys.setdefaultencoding('utf8')
+# reload(sys) 
+# sys.setdefaultencoding('utf8')
 if __name__ == "__main__":
     if len(sys.argv) != 3:
         print("Usage: search.py <file> <keyword>", file=sys.stderr)
