@@ -1,3 +1,2 @@
 #!/bin/bash
-source ../../env.sh
-/usr/local/spark/bin/spark-submit --master=spark://$SPARK_MASTER:7077 ./rdd-flatmap.py
+/usr/local/spark/bin/spark-submit --master yarn /spark-examples/test-python/rdd-flatmap/rdd-flatmap.py
