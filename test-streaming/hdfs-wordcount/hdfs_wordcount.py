@@ -1,98 +1,72 @@
 #!/usr/bin/env python3
 """
-HDFS-based Spark Structured Streaming example.
-Monitors HDFS directory for new text files and performs real-time word count.
+Simple HDFS Spark Streaming Demo for Students
+
+Key Concept: Even though we uploaded 5 files before starting Spark,
+maxFilesPerTrigger=1 makes Spark process them one at a time,
+creating 5 distinct "streaming batches" that students can observe.
 """
 
-import sys
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import explode, split, col, current_timestamp
+from pyspark.sql.functions import explode, split, col
 
-# Configuration
-HDFS_INPUT_DIR = "hdfs:///streaming-test/input"
-HDFS_OUTPUT_DIR = "hdfs:///streaming-test/output"
-CHECKPOINT_DIR = "hdfs:///spark-checkpoints/hdfs-streaming"
-
-# Default run duration (seconds) - 0 means run until manually stopped
-DEFAULT_DURATION = 60
-
-
-def main() -> None:
-    # Get duration from command line argument
-    duration = int(sys.argv[1]) if len(sys.argv) > 1 else DEFAULT_DURATION
-    
+def main():
+    # Create Spark session
     spark = SparkSession.builder \
-        .appName("HDFS-Structured-Streaming-WordCount") \
+        .appName("Student-HDFS-Streaming-Demo") \
         .getOrCreate()
-
+    
+    # Reduce log noise so students see clean output
     spark.sparkContext.setLogLevel("WARN")
-
-    print("=== HDFS Structured Streaming Started ===")
-    print(f"Monitoring: {HDFS_INPUT_DIR}")
-    print(f"Output:     {HDFS_OUTPUT_DIR}")
-    print(f"Duration:   {duration} seconds")
-    print("=" * 50)
-
+    
+    print("\n" + "="*60)
+    print("    SPARK STREAMING DEMO - HDFS Word Count")
+    print("="*60)
+    print("📁 Reading from: /streaming-test/input")
+    print("⚡ Processing: 1 file per batch (maxFilesPerTrigger=1)")
+    print("📊 Output: Console (watch word counts grow!)")
+    print("="*60 + "\n")
+    
+    # Read streaming data from HDFS
+    # KEY: maxFilesPerTrigger=1 processes files one by one
+    lines = spark.readStream \
+        .format("text") \
+        .option("maxFilesPerTrigger", 1) \
+        .load("/streaming-test/input")
+    
+    # Split lines into words
+    words = lines.select(
+        explode(split(col("value"), r"\s+")).alias("word")
+    ).filter(col("word") != "")
+    
+    # Count words (complete mode shows running totals)
+    word_counts = words \
+        .groupBy("word") \
+        .count() \
+        .orderBy(col("count").desc())
+    
+    # Output to console
+    query = word_counts.writeStream \
+        .outputMode("complete") \
+        .format("console") \
+        .option("numRows", 20) \
+        .option("truncate", False) \
+        .trigger(processingTime="10 seconds") \
+        .start()
+    
+    print("🚀 Streaming started! Watch for 5 batches...")
+    print("   (First batch takes ~60-90 seconds to initialize)")
+    print("   (Remaining batches will be much faster)\n")
+    
     try:
-        # Read streaming text files from HDFS directory
-        lines = spark.readStream \
-            .format("text") \
-            .option("maxFilesPerTrigger", 1) \
-            .load(HDFS_INPUT_DIR)
-
-        # Transform: Split lines into words and filter out empty strings
-        words = lines.select(
-            explode(split(col("value"), r"\s+")).alias("word")
-        ).filter(col("word") != "")
-
-        # Aggregate: Count words across all processed files
-        word_counts = words.groupBy("word") \
-            .count() \
-            .orderBy(col("count").desc())
-
-        # Output 1: Console for real-time monitoring
-        console_query = word_counts.writeStream \
-            .outputMode("complete") \
-            .format("console") \
-            .option("truncate", False) \
-            .option("numRows", 15) \
-            .trigger(processingTime="8 seconds") \
-            .start()
-
-        # Output 2: HDFS for persistence (optional)
-        hdfs_query = word_counts.writeStream \
-            .outputMode("complete") \
-            .format("csv") \
-            .option("path", HDFS_OUTPUT_DIR) \
-            .option("header", "true") \
-            .option("checkpointLocation", CHECKPOINT_DIR) \
-            .trigger(processingTime="8 seconds") \
-            .start()
-
-        print("Streaming queries started. Processing incoming files...")
-        print("Watch for new batches appearing in console output.")
-
-        # Run for specified duration
-        if duration > 0:
-            console_query.awaitTermination(duration)
-        else:
-            console_query.awaitTermination()
-
+        # Run for 2 minutes - plenty of time for 5 batches
+        query.awaitTermination(120)
     except KeyboardInterrupt:
-        print("\n[INFO] Streaming interrupted by user.")
-    except Exception as e:
-        print(f"[ERROR] Streaming error: {e}")
+        print("\n⏹️  Stopped by user")
     finally:
-        # Graceful shutdown
-        print("Stopping streaming queries...")
-        try:
-            console_query.stop()
-            hdfs_query.stop()
-        except:
-            pass
+        query.stop()
         spark.stop()
-        print("=== HDFS Structured Streaming Completed ===")
-
+        print("\n✅ Streaming demo completed!")
 
 if __name__ == "__main__":
     main()
