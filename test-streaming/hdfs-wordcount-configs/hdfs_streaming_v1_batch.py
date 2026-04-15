@@ -64,7 +64,7 @@ def main():
     print("   Notice the different growth patterns!\n")
 
     try:
-        query.awaitTermination(180)
+        query.awaitTermination(120)
     except KeyboardInterrupt:
         print("\n⏹️  Stopped by user")
     finally:
