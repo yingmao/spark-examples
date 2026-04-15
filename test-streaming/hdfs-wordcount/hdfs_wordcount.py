@@ -14,6 +14,7 @@ def main():
     # Create Spark session
     spark = SparkSession.builder \
         .appName("Student-HDFS-Streaming-Demo") \
+        .config("spark.sql.shuffle.partitions", "2") \
         .getOrCreate()
     
     # Reduce log noise so students see clean output
