@@ -61,7 +61,7 @@ def main():
     
     try:
         # Run for 2 minutes - plenty of time for 5 batches
-        query.awaitTermination(240)
+        query.awaitTermination(120)
     except KeyboardInterrupt:
         print("\n⏹️  Stopped by user")
     finally:
